@@ -1,0 +1,26 @@
+package tracker;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class FileHandler {
+
+    public static void saveTransactions(List<Transaction> transactions, String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        for (Transaction t : transactions) {
+            writer.write(t.toString());
+            writer.newLine();
+        }
+        writer.close();
+    }
+
+    public static List<Transaction> loadTransactions(String filename) throws IOException {
+        List<Transaction> transactions = new ArrayList<>();
+        List<String> lines = Files.readAllLines(Paths.get(filename));
+        for (String line : lines) {
+            transactions.add(Transaction.fromString(line));
+        }
+        return transactions;
+    }
+}
+
